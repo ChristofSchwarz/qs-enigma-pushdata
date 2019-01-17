@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "enigma.js": "^2.4.0",
+    "fs": "0.0.1-security",
+    "ws": "^6.1.2"
+  }
+}
