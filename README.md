@@ -1,4 +1,4 @@
-# qs-enigma-pushdata
+# Pushing Data into Qlik Sense data model with EnigmaJs
 
 This node JS app shows how to push ("trigger to load") a given data array into a Qlik Sense data model of an app.
 
@@ -14,5 +14,7 @@ Steps to prepare
 # 
  * edit push.js to match your app id, table and data structure
  * run it from the Command Prompt using "node push.js"
+
+More info on Enigma can be found here> https://github.com/qlik-oss/enigma.js/
 
 Enjoy pushing data into Qlik.
