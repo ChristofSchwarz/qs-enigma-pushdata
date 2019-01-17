@@ -25,40 +25,44 @@ const session = enigma.create({
     })
 });
 
+// Set below which App amd which table to add data to:
 var addToApp = '4c85c23b-19f2-4bd1-952d-5627618ba044';
 var addToTable = 'MyTable';
 var timestampField = 'timeAdded'; // set to '' if no timestamp needed;
 var addData = [
 	{name: "Jesus", age: 15}
+	,{name: "Maria", age: 47.3}
 ];
 
 
 session.open().then(function (global) {
-    console.log('>> Session was opened successfully');
+	console.log('>> Session was opened successfully');
 	var app;
 	var origScript;
-    //console.log(global);
-    return global.engineVersion().then(ret => {
-        console.log('Engine Version: ', ret);
-        //return global.getDocList();
+	//console.log(global);
+	return global.engineVersion().then(ret => {
+		console.log('Engine Version: ', ret);
+        	//return global.getDocList();
 		return global.openDoc(addToApp);
-    }).then(ret => {
-        app = ret;
-        return app.getScript();
-    }).then(script => {
+	}).then(ret => {
+		app = ret;
+		return app.getScript();
+	}).then(script => {
 		origScript = script;
 		script = [];
 		script.push(`//header of generated script`);
 		addData.forEach(row => {
 			script.push(`CONCATENATE ([${addToTable}])`);
 			script.push(`ADD LOAD`);
-			// compute a Qlik LOAD AUTOGENERATE statement
+			// compute a Qlik ADD LOAD AUTOGENERATE statement
 			var n = 0;
 			if (timestampField.length > 0) {
+				// if wanted, add a timestamp as a field
 				script.push(`TimeStamp(Now()) AS [${timestampField}]`);
 				n++;
 			}
 			for (key in row) {
+				// iterate through data array and add each key-value pair
 				if (!isNaN(parseFloat(row[key])) && isFinite(row[key])) {
 					// value is numeric, make sure JavaScript and Qlik number formatting work
 					script.push((n>0?',':'') + `Num(${row[key]}) AS [${key}]`);
@@ -70,25 +74,25 @@ session.open().then(function (global) {
 			}
 			script.push(`AUTOGENERATE(1);`);
 		})
-		script.push(`EXIT SCRIPT;`);
-        script = script.join('\n'); // implode script array into new-line separated string
+		script.push(`//footer of generated script`);
+		script = script.join('\n'); // implode script array into new-line separated string
 		
 		console.log('---begin of new script---\n');
 		console.log(script);
 		console.log('\n---end of new script---');
-        return app.setScript(script);
-    }).then(ret => {
-        console.log('>> App script changed, now reloading (pushing new data):');
-        return app.doReload(0, true);        // true = Partial Reload
+		return app.setScript(script);
+	}).then(ret => {
+		console.log('>> App script changed, now reloading (pushing new data):');
+		return app.doReload(0, true);        // true = Partial Reload
 	}).then(ret => {
 		console.log('>> Reload finished: ', ret);
 		return app.setScript(origScript);
 	}).then(ret => {
 		console.log('>> Load script reverted to original script. Now saving.');
 		return app.doSave();
-    }).catch(error => {
-        console.error('Error', error);
-    });
+	}).catch(error => {
+		console.error('Error', error);
+	});
 }).then(ret => {
     session.close();
 	console.log('>> Done.');
