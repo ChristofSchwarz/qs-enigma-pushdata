@@ -11,8 +11,9 @@ Steps to prepare
  * make sure the port 4747 (Engine API port) is open on the Sense server 
  * copy the certificates (client.pem and client_key.pem) from the server (C:\ProgramData\Qlik\Sense\Repository\Exported Certificates\.Local Certificates) and put it into the same folder just created
  * edit the right address of the server in push.js (it shows 'localhost' after download)
-![alttext](https://github.com/ChristofSchwarz/pics/raw/master/pushdata.png "screenshot")
+#
  * edit push.js to match your app id, table and data structure
+![alttext](https://github.com/ChristofSchwarz/pics/raw/master/pushdata.png "screenshot")
  * run it from the Command Prompt using "node push.js"
 
 More info on Enigma can be found here> https://github.com/qlik-oss/enigma.js/
