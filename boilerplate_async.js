@@ -70,7 +70,7 @@ const session = enigma.create({
 });
 
 function run() {
-   return new Promise(async function(res,rej){
+  return new Promise(async function(res,rej){
     try {
         var global = await session.open();    
         console.log('Session opened with ' + global.session.config.url);
@@ -81,14 +81,13 @@ function run() {
         await session.close();
         res();
     } catch(err) {
-        console.log('Error', err);
         await session.close();
         rej(err);
     }
-   }) 
+  }) 
 }
 
-run().then(()=>{console.log('Bye.')}).catch((err)=>{});
+run().then(()=>{console.log('Bye.')}).catch((err)=>{console.log('Error',err)});
 
 
 
