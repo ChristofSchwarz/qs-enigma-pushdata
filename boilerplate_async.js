@@ -28,7 +28,8 @@ const config = {
     protocol: 'wss',
     wsParams: {
         rejectUnauthorized: false,  
-        //ca: [fs.readFileSync('C:\\ProgramData\\Qlik\\Sense\\Repository\\Exported Certificates\\.Local Certificates\\root.pem')],  // you can skip ca if you set rejectUnautzoried to false
+        // you can skip providing "ca" if you set "rejectUnautzoried" to false
+        //ca: fs.readFileSync('C:\\ProgramData\\Qlik\\Sense\\Repository\\Exported Certificates\\.Local Certificates\\root.pem'),  
         key: fs.readFileSync('C:\\ProgramData\\Qlik\\Sense\\Repository\\Exported Certificates\\.Local Certificates\\client_key.pem'),
         cert: fs.readFileSync('C:\\ProgramData\\Qlik\\Sense\\Repository\\Exported Certificates\\.Local Certificates\\client.pem'),
         headers: { "X-Qlik-User": 'UserDirectory=INTERNAL;UserId=sa_engine' }
@@ -45,7 +46,8 @@ const config = {
     protocol: 'wss',
     wsParams: {
         rejectUnauthorized: false,  
-        //ca: [fs.readFileSync('.\\root.pem')],  // you can skip ca if you set rejectUnautzoried to false
+        // you can skip providing "ca" if you set "rejectUnautzoried" to false
+        //ca: fs.readFileSync('.\\root.pem'),  
         key: fs.readFileSync('.\\client_key.pem'),
         cert: fs.readFileSync('.\\client.pem'),
         headers: { "X-Qlik-User": 'UserDirectory=INTERNAL;UserId=sa_engine' }
